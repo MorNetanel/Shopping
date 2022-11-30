@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
+import java.util.UUID;
 
 
 @Entity
@@ -17,9 +19,16 @@ public class Users {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String userName, password;
+
+    @Column(unique = true, nullable = false)
+    @Size(min = 4, max = 16)
+    private String userName;
+
+    @Column(nullable = false)
+    @Size(min = 4, max = 16)
+    private String password;
+
     private ClientType clientType;
 
 
