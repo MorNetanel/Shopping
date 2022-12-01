@@ -11,8 +11,6 @@ public interface CustomerServiceInterface {
 
     Customer login(String userName, String password) throws SystemException;
 
-    Customer getDetails(int id);
-
     Customer updateCustomer(Customer customer);
 
     boolean deleteCustomer (int id);
@@ -36,6 +34,8 @@ public interface CustomerServiceInterface {
     boolean clearCart();
 
     boolean purchaseCart();
+
+	Customer getDetails() throws SystemException;
 
 
 

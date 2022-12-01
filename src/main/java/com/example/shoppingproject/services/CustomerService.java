@@ -60,13 +60,13 @@ public class CustomerService implements CustomerServiceInterface {
 			this.id = customer.getId();
 			return customer;
 		}
-		 else throw new SystemException(ErrMsg.CUSTOMER_EXIST);
+		 else throw new SystemException(ErrMsg.ID_NOT_FOUND);
 	}
 
 	@Override
-	public Customer getDetails(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer getDetails() throws SystemException{
+		// TODO get details of the customer
+		return customerRepository.findById(id).orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
 	}
 
 	@Override
