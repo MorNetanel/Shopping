@@ -163,8 +163,17 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public List<Product> getProductsBetweenPrices(double minPrice, double maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Get customers products between two prices
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if(customersProducts.get(i).getPrice() > minPrice && 
+					customersProducts.get(i).getPrice() < maxPrice) {
+				returnProducts.add(customersProducts.get(i));
+			}
+		}
+		return returnProducts;
 	}
 
 	@Override

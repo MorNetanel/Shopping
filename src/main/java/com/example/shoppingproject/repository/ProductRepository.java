@@ -27,4 +27,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select products_id from shopping.customers_products where customer_id=?1", nativeQuery = true)
 	public ArrayList<Integer> getAllProductsIdByCustomersId(int customerId);
+		
 }
