@@ -29,6 +29,7 @@ public class Users {
     @Size(min = 4, max = 16)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private ClientType clientType;
 
 

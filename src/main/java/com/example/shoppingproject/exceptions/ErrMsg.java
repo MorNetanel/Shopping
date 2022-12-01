@@ -14,7 +14,9 @@ public enum ErrMsg {
 
     CUSTOMER_UPDATE_FAILURE("Failed to update"),
 
-    PRODUCT_EXIST("Product not found")
+    PRODUCT_EXIST("Product not found"),
+
+    ACTION_FAILED("Action failed")
 
 
     ;

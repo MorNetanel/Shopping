@@ -18,9 +18,9 @@ public interface CompanyServiceInterface {
 
     List<Product> getCompanyProducts();
 
-    Product addProduct(Product product);
+    Product addProduct(Product product) throws SystemException;
 
-    Product getOneProduct(int prodId);
+    Product getOneProduct(int prodId) throws SystemException;
 
     Product getOneProductByName(String prodName);
 

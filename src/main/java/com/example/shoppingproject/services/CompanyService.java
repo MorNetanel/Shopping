@@ -54,17 +54,22 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getCompanyProducts() {
-        return null;
+        return productRepository.findByCompanyId();
     }
 
     @Override
-    public Product addProduct(Product product) {
-        return null;
+    public Product addProduct(Product product) throws SystemException {
+        List<Product> products = productRepository.findByCompanyId();
+        if (!products.stream().anyMatch(product1 -> product1.getProductName().equalsIgnoreCase(product.getProductName()))){
+            product.setCompany(companyRepository.findById(id).orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND)));
+            return productRepository.save(product);}
+        throw new SystemException(ErrMsg.ACTION_FAILED);
     }
 
     @Override
-    public Product getOneProduct(int prodId) {
-        return null;
+    public Product getOneProduct(int prodId) throws SystemException {
+        return productRepository.findByIdAndCompnyId(prodId, id)
+                .orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
     }
 
     @Override
