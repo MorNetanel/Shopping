@@ -8,7 +8,9 @@ public enum ErrMsg {
 
     COMPANY_EXIST("Company Already exist"),
 
-    CUSTOMER_EXIST("Customer already exist")
+    CUSTOMER_EXIST("Customer already exist"),
+
+    COMPANY_LOGIN_FAILURE("Failed to login")
 
 
 

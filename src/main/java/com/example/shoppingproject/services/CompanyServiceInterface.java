@@ -3,13 +3,14 @@ package com.example.shoppingproject.services;
 import com.example.shoppingproject.beans.Company;
 import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.ProductType;
+import com.example.shoppingproject.exceptions.SystemException;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface CompanyServiceInterface {
 
-    Company login (String userName, String password );
+    Company login (String userName, String password ) throws SystemException;
 
 
 

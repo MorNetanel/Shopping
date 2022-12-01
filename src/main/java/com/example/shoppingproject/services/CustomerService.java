@@ -1,5 +1,6 @@
 package com.example.shoppingproject.services;
 
+import com.example.shoppingproject.repository.AuthRepository;
 import com.example.shoppingproject.repository.CustomerRepository;
 import com.example.shoppingproject.repository.ProductRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -11,15 +12,18 @@ import org.springframework.stereotype.Service;
 public class CustomerService  {
 
 
-    private int id;
+    private int id = -1;
 
     private CustomerRepository customerRepository;
 
     private ProductRepository productRepository;
 
-    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository) {
+    private AuthRepository authRepository;
+
+    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository, AuthRepository authRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
+        this.authRepository = authRepository;
     }
 
     public int getId() {

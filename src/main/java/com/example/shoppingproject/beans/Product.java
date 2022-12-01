@@ -27,7 +27,7 @@ public class Product {
 
     private String image;
 
-//    @Enumerated(EnumType.STRING)
+
     @Column(nullable = true)
     private Color color;
 
