@@ -11,6 +11,7 @@ import com.example.shoppingproject.repository.CustomerRepository;
 import com.example.shoppingproject.repository.ProductRepository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -139,8 +140,25 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public List<Product> getAllProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO get all customers products
+		
+		//get all the ids of products that belongs to customer
+		//get all the products
+		//run on both of them
+		
+		ArrayList<Integer> productsId = productRepository.getAllProductsIdByCustomersId(this.id);
+		List<Product> products = productRepository.findAll();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		for (int i = 0; i < productsId.size(); i++) {
+			for (int j = 0; j < products.size(); j++) {
+				if(productsId.get(i) == products.get(j).getId()) {
+					returnProducts.add(products.get(j));
+				}
+			}
+		}
+		
+		return returnProducts;
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 package com.example.shoppingproject.repository;
 
 import com.example.shoppingproject.beans.Product;
+
+import java.util.ArrayList;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "select * from shopping.customers_products where customer_id =?1 and products_id=?2" , nativeQuery = true)
     public Product getProdcutByCustomerIdAndProductId(int CustomerId, int ProductId);
+	
+	
+	@Query(value = "select products_id from shopping.customers_products where customer_id=?1", nativeQuery = true)
+	public ArrayList<Integer> getAllProductsIdByCustomersId(int customerId);
 }
