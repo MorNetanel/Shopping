@@ -178,8 +178,19 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public List<Product> getAProductsBetweenDates(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Get all products between two dates
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if((startDate.after(customersProducts.get(i).getPublishedDate())&&
+					startDate.before(customersProducts.get(i).getExpiredDate())
+					&&(customersProducts.get(i).getExpiredDate().after(endDate))
+			   )) {
+				returnProducts.add(customersProducts.get(i));
+			}
+		}
+		return returnProducts;
 	}
 
 	@Override
