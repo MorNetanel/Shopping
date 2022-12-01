@@ -48,8 +48,8 @@ public class CompanyService implements CompanyServiceInterface  {
     }
 
     @Override
-    public Company getDetails(int id) {
-        return null;
+    public Company getDetails(int id) throws SystemException {
+        return companyRepository.findById(id).orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
     }
 
     @Override
