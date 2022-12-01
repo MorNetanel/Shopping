@@ -47,7 +47,6 @@ public class Init implements CommandLineRunner {
 
         try {
 
-
 //        Company company = Company.builder()
 //                .email("c@cc")
 //                .password("1111")
