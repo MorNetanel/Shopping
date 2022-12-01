@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CompanyService implements CompanyServiceInterface {
+public class CompanyService   {
 
     private int id;
     private CompanyRepository companyRepository;
@@ -35,4 +35,6 @@ public class CompanyService implements CompanyServiceInterface {
      * get between published dates, get between prices get top/min average rating get by name
      * get by type get top sales
      */
+
+
 }

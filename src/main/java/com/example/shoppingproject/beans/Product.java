@@ -3,13 +3,11 @@ package com.example.shoppingproject.beans;
 import com.example.shoppingproject.enums.Color;
 import com.example.shoppingproject.enums.ProductType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "products")
@@ -29,7 +27,7 @@ public class Product {
 
     private String image;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private Color color;
 
@@ -48,7 +46,9 @@ public class Product {
 
     private int sales;
 
-    private Date publishedDate, ExpiredDate;
+    private Date publishedDate = Date.valueOf(LocalDate.now());
+    private Date ExpiredDate;
     @ManyToOne
+    @ToString.Exclude
     private Company company;
 }

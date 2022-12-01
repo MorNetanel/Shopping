@@ -38,8 +38,8 @@ public class Company {
     @Size(min = 4, max = 16)
     private String companyName;
 
-    @OneToMany (mappedBy = "company")
-    @Singular
-    private List<Product> productList = new ArrayList<>();
+    @OneToMany (mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Singular("companyProduct")
+    private List<Product> ProductList = new ArrayList<>();
 
 }

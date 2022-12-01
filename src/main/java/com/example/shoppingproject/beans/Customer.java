@@ -40,10 +40,10 @@ public class Customer {
     @Size(min = 3, max = 10)
     private String LastName;
     @ManyToMany
-    @Singular
+    @Singular("customerProduct")
     private List<Product> products = new ArrayList<>();
     @ManyToMany
-    @Singular // provide methods like add product to cart, add add list of products and clear
+    @Singular("cartProduct") // provide methods like add product to cart, add add list of products and clear
     private List<Product>cart = new ArrayList<>();
     private boolean isVerified, isHelper;
     private Date birthDate;
