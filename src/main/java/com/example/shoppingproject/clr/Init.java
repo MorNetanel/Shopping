@@ -83,8 +83,11 @@ public class Init implements CommandLineRunner {
             companyRepository.findAll().forEach(System.out::println);
 
 
+
+
         }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("hey raanan don't mess with my code please");
         }
     }
 }
