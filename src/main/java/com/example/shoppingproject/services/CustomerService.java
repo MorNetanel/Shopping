@@ -3,6 +3,7 @@ package com.example.shoppingproject.services;
 import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.beans.Customer;
 import com.example.shoppingproject.beans.Product;
+import com.example.shoppingproject.beans.Users;
 import com.example.shoppingproject.enums.ClientType;
 import com.example.shoppingproject.exceptions.ErrMsg;
 import com.example.shoppingproject.exceptions.SystemException;
@@ -70,9 +71,33 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public Customer updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer updateCustomer(Customer customer) throws SystemException {
+		// TODO updating a customers personal details
+		
+		String email = customer.getEmail();
+		String password = customer.getPassword();
+		String firstName = customer.getFirstName();
+		String lastName = customer.getLastName();
+		Date date = new Date(System.currentTimeMillis());
+		List<Users> users = userRepository.findAll();
+		
+		//TODO check if user name already exists
+		for (Users users2 : users) {
+			if(users2.getUserName().equals(customer.getUserName())) {
+				throw new SystemException(ErrMsg.CUSTOMER_UPDATE_FAILURE);
+			}
+		}
+		
+		//TODO check if email, password, first name, last name and birthday are valid 
+		if((email.length() < 8 || email.length() > 30) || 
+				(password.length() < 4 || password.length() > 16) || 
+					(firstName.length() < 3 || firstName.length() > 10)|| 
+						(lastName.length() < 3 || lastName.length() > 10) ||
+							customer.getBirthDate().before(date) ) {
+			throw new SystemException(ErrMsg.CUSTOMER_UPDATE_FAILURE);
+		}
+		
+		return customerRepository.save(customer);
 	}
 
 	@Override

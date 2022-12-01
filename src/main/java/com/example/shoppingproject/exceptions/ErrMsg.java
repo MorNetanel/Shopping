@@ -10,9 +10,9 @@ public enum ErrMsg {
 
     CUSTOMER_EXIST("Customer already exist"),
 
-    COMPANY_LOGIN_FAILURE("Failed to login")
+    COMPANY_LOGIN_FAILURE("Failed to login"),
 
-
+    CUSTOMER_UPDATE_FAILURE("Failed to update")
 
 
 

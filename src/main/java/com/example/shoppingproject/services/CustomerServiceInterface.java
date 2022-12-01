@@ -11,7 +11,7 @@ public interface CustomerServiceInterface {
 
     Customer login(String userName, String password) throws SystemException;
 
-    Customer updateCustomer(Customer customer);
+    Customer updateCustomer(Customer customer) throws SystemException;
 
     boolean deleteCustomer (int id);
 
