@@ -87,7 +87,9 @@ public class Init implements CommandLineRunner {
 
         }catch (Exception e){
             System.out.println(e.getMessage());
-            System.out.println("hey raanan don't mess with my code please");
+
+            System.out.println("hey nati");
+
         }
     }
 }
