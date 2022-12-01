@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CustomerService {
+public class CustomerService implements CustomerServiceInterface {
 
 
     private int id;

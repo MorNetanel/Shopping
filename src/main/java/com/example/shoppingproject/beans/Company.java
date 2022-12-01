@@ -1,11 +1,10 @@
 package com.example.shoppingproject.beans;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Company {
 
 
@@ -39,6 +39,7 @@ public class Company {
     private String companyName;
 
     @OneToMany (mappedBy = "company")
-    private List<Product> productList;
+    @Singular
+    private List<Product> productList = new ArrayList<>();
 
 }

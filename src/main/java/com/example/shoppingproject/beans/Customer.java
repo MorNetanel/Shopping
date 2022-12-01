@@ -1,12 +1,11 @@
 package com.example.shoppingproject.beans;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Customer {
 
     @Id
@@ -40,9 +40,11 @@ public class Customer {
     @Size(min = 3, max = 10)
     private String LastName;
     @ManyToMany
-    private List<Product> products;
+    @Singular
+    private List<Product> products = new ArrayList<>();
     @ManyToMany
-    private List<Product>cart;
+    @Singular // provide methods like add product to cart, add add list of products and clear
+    private List<Product>cart = new ArrayList<>();
     private boolean isVerified, isHelper;
     private Date birthDate;
 

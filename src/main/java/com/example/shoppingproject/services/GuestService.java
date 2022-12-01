@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class GuestService {
+public class GuestService implements GuestServiceInterface {
 
 
     private CompanyRepository companyRepository;
