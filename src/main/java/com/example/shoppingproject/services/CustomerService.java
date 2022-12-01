@@ -1,6 +1,6 @@
 package com.example.shoppingproject.services;
 
-import com.example.shoppingproject.repository.AuthRepository;
+import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.repository.CustomerRepository;
 import com.example.shoppingproject.repository.ProductRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -18,12 +18,12 @@ public class CustomerService  {
 
     private ProductRepository productRepository;
 
-    private AuthRepository authRepository;
+    private UserRepository userRepository;
 
-    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository, AuthRepository authRepository) {
+    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
-        this.authRepository = authRepository;
+        this.userRepository = userRepository;
     }
 
     public int getId() {
