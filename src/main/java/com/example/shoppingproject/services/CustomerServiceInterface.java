@@ -2,13 +2,14 @@ package com.example.shoppingproject.services;
 
 import com.example.shoppingproject.beans.Customer;
 import com.example.shoppingproject.beans.Product;
+import com.example.shoppingproject.exceptions.SystemException;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface CustomerServiceInterface {
 
-    Customer login(String userName, String password);
+    Customer login(String userName, String password) throws SystemException;
 
     Customer getDetails(int id);
 
