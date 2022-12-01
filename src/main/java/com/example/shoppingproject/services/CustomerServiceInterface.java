@@ -13,7 +13,7 @@ public interface CustomerServiceInterface {
 
     Customer updateCustomer(Customer customer) throws SystemException;
 
-    boolean deleteCustomer (int id);
+	boolean deleteCustomer();
 
     Product getOneProduct (int id);
 
@@ -36,6 +36,7 @@ public interface CustomerServiceInterface {
     boolean purchaseCart();
 
 	Customer getDetails() throws SystemException;
+
 
 
 

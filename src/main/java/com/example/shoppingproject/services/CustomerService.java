@@ -101,9 +101,19 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public boolean deleteCustomer(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteCustomer() {
+		// TODO Customer deletes himself from the application
+		
+		//delete from users table
+		//remove from customer table
+		//remove from customer_cart table 
+		//remove from customers_products table
+		
+		productRepository.deleteCustomerProductsHistory(this.id);
+		productRepository.deleteCustomerCartHistory(this.id);
+		customerRepository.deleteById(this.id);
+		userRepository.deleteById(this.id);
+		return true;
 	}
 
 	@Override
