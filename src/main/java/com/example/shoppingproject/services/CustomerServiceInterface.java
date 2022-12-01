@@ -15,7 +15,7 @@ public interface CustomerServiceInterface {
 
 	boolean deleteCustomer();
 
-    Product getOneProduct (int id);
+    Product getOneProduct (int id) throws SystemException;
 
     List<Product> getAllProducts();
 

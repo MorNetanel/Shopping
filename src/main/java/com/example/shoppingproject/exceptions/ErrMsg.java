@@ -12,9 +12,9 @@ public enum ErrMsg {
 
     COMPANY_LOGIN_FAILURE("Failed to login"),
 
-    CUSTOMER_UPDATE_FAILURE("Failed to update")
+    CUSTOMER_UPDATE_FAILURE("Failed to update"),
 
-
+    PRODUCT_EXIST("Product not found")
 
 
     ;

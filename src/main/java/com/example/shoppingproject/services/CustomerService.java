@@ -117,9 +117,24 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public Product getOneProduct(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product getOneProduct(int id) throws SystemException {
+		// TODO Get one product by a customer
+		
+		//check if id is valid
+		//if valid check if product id matches customer id
+		
+		Product product = productRepository.findById(id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
+		if(product != null) {
+			product = productRepository.getProdcutByCustomerIdAndProductId(this.id, id);
+		}
+		
+		if(product != null) {
+			return product;
+		}
+		else {
+			throw new SystemException(ErrMsg.PRODUCT_EXIST);
+		}
+
 	}
 
 	@Override
