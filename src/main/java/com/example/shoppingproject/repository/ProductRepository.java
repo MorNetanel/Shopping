@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.shoppingproject.enums.ProductType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -46,6 +47,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "select * from products where company_id = ?1 order by average_rating desc limit ?2", nativeQuery = true)
     List<Product> findTopRatingProductsByCompanyId( int companyId, int numOfProducts);
 
+    @Query(value = "select * from products where company_id = ?1 order by average_rating asc limit ?2", nativeQuery = true)
+    List<Product> findLowRatingProductsByCompanyId( int companyId, int numOfProducts);
+
+    List<Product> findByProductType(ProductType productType);
+
+    @Query(value = "select * from products where company_id = ?1 order by sales desc limit ?2", nativeQuery = true)
+    List<Product> findTopSaleProductsByCompanyId(int companyId, int numOfProducts);
 
 
 

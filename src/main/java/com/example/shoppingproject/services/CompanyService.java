@@ -113,17 +113,17 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getMinRatingProducts(int numOfProducts) {
-        return null;
+        return productRepository.findLowRatingProductsByCompanyId(id, numOfProducts);
     }
 
     @Override
     public List<Product> getProductsByType(ProductType productType) {
-        return null;
+        return productRepository.findByProductType(productType);
     }
 
     @Override
     public List<Product> getTopSalesProducts(int numOfProducts) {
-        return null;
+        return productRepository.findTopSaleProductsByCompanyId(id, numOfProducts);
     }
 
     public  boolean isProductNameExistsForCompanyProducts(String productName){
