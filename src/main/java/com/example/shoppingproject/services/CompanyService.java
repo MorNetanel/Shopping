@@ -102,7 +102,7 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getProductsBetweenPrices(double minPrice, double maxPrice) {
-        return productRepository.findProductsBetweenMinPriceAndMaxPrice(minPrice, maxPrice)
+        return productRepository.findByPriceBetween(minPrice, maxPrice)
                 .stream().filter(product -> product.getCompany().getId() == id).collect(Collectors.toList());
     }
 
