@@ -43,7 +43,7 @@ public class Customer {
     @Singular("customerProduct")
     private List<Product> products = new ArrayList<>();
     @ManyToMany
-    @Singular("cartProduct") // provide methods like add product to cart, add add list of products and clear
+    @Singular("cartProduct") 
     private List<Product>cart = new ArrayList<>();
     private boolean isVerified, isHelper;
     private Date birthDate;
