@@ -25,7 +25,7 @@ public interface CustomerServiceInterface {
 
     List<Product> getTopRatingProducts(int numOfProducts) throws SystemException;
 
-    List<Product> getProductsByName(String productName);
+    List<Product> getProductsByName(String productName) throws SystemException;
 
     List<Product> addProductToCart (Product product);
 

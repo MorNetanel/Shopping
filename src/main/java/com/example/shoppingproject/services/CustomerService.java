@@ -217,9 +217,22 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public List<Product> getProductsByName(String productName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getProductsByName(String productName) throws SystemException {
+		// TODO Get customer's products by the given name
+		
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if(customersProducts.get(i).getProductName().equalsIgnoreCase(productName)) {
+				returnProducts.add(customersProducts.get(i));
+				
+			}
+		}
+		if(!returnProducts.isEmpty())
+			return returnProducts;
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
+		
 	}
 
 	@Override
