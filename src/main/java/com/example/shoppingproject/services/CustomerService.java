@@ -55,7 +55,7 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
 	@Override
-	public Customer login(String userName, String password) throws SystemException {
+	public Customer login(String userName, String password) throws SystemException{
 		// TODO Login method by user name and password
 		if(userRepository.findClientTypeByUserNameAndPassword(userName, password) == ClientType.CUSTOMER) {
 			Customer customer = customerRepository.findByUserNameAndPassword(userName, password);
@@ -194,9 +194,26 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public List<Product> getTopRatingProducts(int numOfProducts) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getTopRatingProducts(int numOfProducts) throws SystemException {
+		// TODO Gets top rating products by numbers (top rating is 4-5 rating)
+		
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		int productCounter = numOfProducts;
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if(customersProducts.get(i).getAverageRating() > 4) {
+				returnProducts.add(customersProducts.get(i));
+				productCounter--;
+			}
+			if(productCounter == 0)
+				break;
+		}
+		if(productCounter == 0) {
+			return returnProducts;
+		}
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
 	}
 
 	@Override

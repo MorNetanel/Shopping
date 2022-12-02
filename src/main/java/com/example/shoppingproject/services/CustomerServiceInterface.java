@@ -23,7 +23,7 @@ public interface CustomerServiceInterface {
 
     List<Product> getAProductsBetweenDates(Date startDate, Date endDate);
 
-    List<Product> getTopRatingProducts(int numOfProducts);
+    List<Product> getTopRatingProducts(int numOfProducts) throws SystemException;
 
     List<Product> getProductsByName(String productName);
 
