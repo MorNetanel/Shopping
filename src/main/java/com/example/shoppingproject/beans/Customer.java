@@ -38,7 +38,7 @@ public class Customer {
 
     @Column(nullable = false)
     @Size(min = 3, max = 10)
-    private String LastName;
+    private String lastName;
     @ManyToMany
     @Singular("customerProduct")
     private List<Product> products = new ArrayList<>();

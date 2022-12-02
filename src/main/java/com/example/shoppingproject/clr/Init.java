@@ -2,6 +2,7 @@ package com.example.shoppingproject.clr;
 
 
 import com.example.shoppingproject.beans.Company;
+import com.example.shoppingproject.beans.Customer;
 import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.Color;
 import com.example.shoppingproject.enums.ProductType;
@@ -24,6 +25,20 @@ import java.sql.Date;
 public class Init implements CommandLineRunner {
 
 
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+
+
 
 
 
@@ -33,6 +48,37 @@ public class Init implements CommandLineRunner {
     public void run(String... args) {
 
         try {
+
+//            Company company = Company.builder()
+//                    .email("2@222")
+//                    .userName("111111")
+//                    .companyName("RC")
+//                    .password("22222")
+//
+//                    .build();
+
+//            companyRepository.save(company);
+
+
+//            Product product = Product.builder()
+//                    .ExpiredDate(Date.valueOf("2023-01-01"))
+//                    .color(Color.BLACK)
+//                    .quantity(4)
+//                    .productName("The cola")
+//                    .description("glass bottle")
+//                    .image("(____)")
+//                    .company(companyRepository.findById(1).orElseThrow())
+//                    .build();
+//
+//            productRepository.save(product);
+
+
+
+
+
+
+
+
 
 
 

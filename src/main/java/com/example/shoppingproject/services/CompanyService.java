@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -22,7 +23,7 @@ public class CompanyService implements CompanyServiceInterface  {
 
     private int id = -1;
     private CompanyRepository companyRepository;
-    private ProductRepository productRepository;
+    private  ProductRepository productRepository;
 
     private UserRepository userRepository;
 
@@ -53,33 +54,36 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getCompanyProducts() {
-        return productRepository.findByCompanyId();
+        return productRepository.findByCompanyId(id);
     }
 
     @Override
     public Product addProduct(Product product) throws SystemException {
-        List<Product> products = productRepository.findByCompanyId();
-        if (!products.stream().anyMatch(product1 -> product1.getProductName().equalsIgnoreCase(product.getProductName()))){
-            product.setCompany(companyRepository.findById(id).orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND)));
+        if (isProductNameExistsForCompanyProducts(product.getProductName())){
+            addCompanyIdToProduct(product);
             return productRepository.save(product);}
         throw new SystemException(ErrMsg.ACTION_FAILED);
     }
 
     @Override
     public Product getOneProduct(int prodId) throws SystemException {
-        return productRepository.findByIdAndComapnyId(prodId, id)
+        return productRepository.findByIdAndCompanyId(prodId, id)
                 .orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
     }
 
     @Override
     public Product getOneProductByName(String prodName) throws SystemException {
         return productRepository
-                .findByProductNameAndComapnyId(prodName, id)
+                .findByProductName(prodName).filter(product -> product.getCompany().getId() == id)
                 .orElseThrow(()->new SystemException(ErrMsg.ACTION_FAILED));
     }
 
     @Override
     public boolean deleteProduct(int prodId) {
+        if (productRepository.existsById(prodId)){
+            productRepository.deleteById(prodId);
+            return true;
+        }
         return false;
     }
 
@@ -92,12 +96,14 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getProductsBetweenPublishedDates(Date startDate, Date endDate) {
-        return null;
+        return productRepository.findProductsBetweenPublishedDateAndExpiredDate(startDate, endDate)
+                .stream().filter(product -> product.getCompany().getId() == id).collect(Collectors.toList());
     }
 
     @Override
     public List<Product> getProductsBetweenPrices(double minPrice, double maxPrice) {
-        return null;
+        return productRepository.findProductsBetweenMinPriceAndMaxPrice(minPrice, maxPrice)
+                .stream().filter(product -> product.getCompany().getId() == id).collect(Collectors.toList());
     }
 
     @Override
@@ -118,6 +124,15 @@ public class CompanyService implements CompanyServiceInterface  {
     @Override
     public List<Product> getTopSalesProducts(int numOfProducts) {
         return null;
+    }
+
+    public  boolean isProductNameExistsForCompanyProducts(String productName){
+        List<Product> products = productRepository.findByCompanyId(id);
+        return products.stream().anyMatch(product1 -> product1.getProductName().equalsIgnoreCase(productName));
+    }
+
+    public void addCompanyIdToProduct(Product product) throws SystemException {
+        product.setCompany(companyRepository.findById(id).orElseThrow(() -> new SystemException(ErrMsg.ID_NOT_FOUND)));
     }
 
 

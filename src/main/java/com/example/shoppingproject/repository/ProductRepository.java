@@ -2,6 +2,7 @@ package com.example.shoppingproject.repository;
 
 import com.example.shoppingproject.beans.Product;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +31,19 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query(value = "select products_id from shopping.customers_products where customer_id=?1", nativeQuery = true)
 	 ArrayList<Integer> getAllProductsIdByCustomersId(int customerId);
 
-     List<Product>findByCompanyId();
+    @Query(value = "select * from products where company_id = ?1", nativeQuery = true)
+     List<Product>findByCompanyId(int company_id);
 
-     Optional<Product> findByIdAndComapnyId(int id, int comapnyId);
+     Optional<Product> findByIdAndCompanyId(int id, int companyId);
 
-    Optional<Product> findByProductNameAndComapnyId(String productName,  int comapnyId);
+    Optional<Product> findByProductName(String productName);
+
+    @Query(value = "select * from products where published_date < ?1 and expired_date > ?2 ", nativeQuery = true)
+    List<Product> findProductsBetweenPublishedDateAndExpiredDate(Date publishedDate, Date expiredDate);
+
+    List<Product> findProductsBetweenMinPriceAndMaxPrice(double minPrice, double maxPrice);
+
+    
 
 
 
