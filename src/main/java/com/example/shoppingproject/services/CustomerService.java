@@ -283,9 +283,39 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public boolean purchaseCart() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean purchaseCart() throws SystemException {
+		// TODO purchase products from the cart
+		
+		//get all the items by the id V
+		//update customers_products V 
+		//update customer itself (use method) V
+		//remove 1 from quantity of product - if 0 - throw exception V
+		//update the amount in the product DB V
+		//delete purchase history of the user 
+		
+		List<Integer> productsId = productRepository.getAllProductsIdByCustomersIdAtCart(this.id);
+		List<Product> products = productRepository.findAll();
+		Customer customer = customerRepository.findById(this.id).orElseThrow(()-> new SystemException(ErrMsg.CUSTOMER_EXIST));
+		
+		for (int i = 0; i < productsId.size(); i++) {
+			for (int j = 0; j < products.size(); j++) {
+				if(productsId.get(i) == products.get(j).getId()) {
+					Product product = productRepository.findById(productsId.get(i)).orElseThrow(()-> new SystemException(ErrMsg.PRODUCT_EXIST));
+					if(product.getQuantity() < 0) {
+						throw new SystemException(ErrMsg.PRODUCT_EXIST);
+					}
+					product.setQuantity(product.getQuantity()-1);
+					productRepository.insertCustomerAndProductAtCustomerProducts(this.id, products.get(j).getId());
+					customer.getProducts().add(products.get(j));
+					
+					customerRepository.save(customer);
+					productRepository.save(product);
+					
+					clearCart();
+				}
+			}
+		}
+		return true;
 	}
 
 }

@@ -33,7 +33,7 @@ public interface CustomerServiceInterface {
 
     boolean clearCart();
 
-    boolean purchaseCart();
+    boolean purchaseCart() throws SystemException;
 
 	Customer getDetails() throws SystemException;
 
