@@ -43,7 +43,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductsBetweenMinPriceAndMaxPrice(double minPrice, double maxPrice);
 
-    
+    @Query(value = "select * from products where company_id = ?1 order by average_rating desc limit ?2", nativeQuery = true)
+    List<Product> findTopRatingProductsByCompanyId( int companyId, int numOfProducts);
+
+
+
+
+
+
 
 
 

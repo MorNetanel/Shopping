@@ -108,7 +108,7 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getTopRatingProducts(int numOfProducts) {
-        return null;
+        return productRepository.findTopRatingProductsByCompanyId(id, numOfProducts);
     }
 
     @Override
