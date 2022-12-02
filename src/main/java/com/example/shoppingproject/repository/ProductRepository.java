@@ -55,8 +55,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "select * from products where company_id = ?1 order by sales desc limit ?2", nativeQuery = true)
     List<Product> findTopSaleProductsByCompanyId(int companyId, int numOfProducts);
 
-
-
+    @Modifying
+    @Query(value = "insert into customers_cart values (?1, ?2);", nativeQuery = true)
+     void insertCustomerAndProduct(int customer_id, int product_id);
+    
 
 
 

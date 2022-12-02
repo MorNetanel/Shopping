@@ -236,9 +236,22 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public List<Product> addProductToCart(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> addProductToCart(Product product) throws SystemException {
+		// TODO Add a product to the customer's shopping cart
+		//add the product to the DB.
+		//add to the cart list of the customer the product + update it
+		
+		
+		Customer customer = customerRepository.findById(this.id).orElseThrow(()-> new SystemException(ErrMsg.CUSTOMER_EXIST));
+		List<Product> totalProducts = productRepository.findAll();
+		
+		if(totalProducts.contains(product)) {
+			productRepository.insertCustomerAndProduct(this.id, product.getId());
+			customer.getCart().add(product);
+			customerRepository.save(customer);
+			return customer.getCart();
+		}
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
 	}
 
 	@Override
