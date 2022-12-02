@@ -22,11 +22,11 @@ public interface CompanyServiceInterface {
 
     Product getOneProduct(int prodId) throws SystemException;
 
-    Product getOneProductByName(String prodName);
+    Product getOneProductByName(String prodName) throws SystemException;
 
     boolean deleteProduct (int prodId);
 
-    Product updateProduct (Product product);
+    Product updateProduct (Product product) throws SystemException;
 
     List<Product> getProductsBetweenPublishedDates(Date startDate, Date endDate);
 

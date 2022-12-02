@@ -32,7 +32,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
      List<Product>findByCompanyId();
 
-     Optional<Product> findByIdAndCompnyId(int id, int comapnyId);
+     Optional<Product> findByIdAndComapnyId(int id, int comapnyId);
+
+    Optional<Product> findByProductNameAndComapnyId(String productName,  int comapnyId);
 
 
 

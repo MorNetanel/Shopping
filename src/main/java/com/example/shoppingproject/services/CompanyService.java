@@ -9,7 +9,6 @@ import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.repository.CompanyRepository;
 import com.example.shoppingproject.repository.ProductRepository;
-import com.example.shoppingproject.repository.UserRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -68,13 +67,15 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public Product getOneProduct(int prodId) throws SystemException {
-        return productRepository.findByIdAndCompnyId(prodId, id)
+        return productRepository.findByIdAndComapnyId(prodId, id)
                 .orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
     }
 
     @Override
-    public Product getOneProductByName(String prodName) {
-        return null;
+    public Product getOneProductByName(String prodName) throws SystemException {
+        return productRepository
+                .findByProductNameAndComapnyId(prodName, id)
+                .orElseThrow(()->new SystemException(ErrMsg.ACTION_FAILED));
     }
 
     @Override
@@ -83,8 +84,10 @@ public class CompanyService implements CompanyServiceInterface  {
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        return null;
+    public Product updateProduct(Product product) throws SystemException {
+        if (!productRepository.existsById(product.getId()))
+                throw new SystemException(ErrMsg.ID_NOT_FOUND);
+            return productRepository.save(product);
     }
 
     @Override
