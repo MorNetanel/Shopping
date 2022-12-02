@@ -277,8 +277,9 @@ public class CustomerService implements CustomerServiceInterface {
 
 	@Override
 	public boolean clearCart() {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO Clearing the total cart by customer's id
+		productRepository.deleteCustomerCartHistory(this.id);
+		return true;
 	}
 
 	@Override
