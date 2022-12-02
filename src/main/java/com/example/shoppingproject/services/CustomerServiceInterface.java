@@ -29,7 +29,7 @@ public interface CustomerServiceInterface {
 
     List<Product> addProductToCart (Product product) throws SystemException;
 
-    List<Product> removeProductFromCart (Product product);
+    List<Product> removeProductFromCart (Product product) throws SystemException;
 
     boolean clearCart();
 

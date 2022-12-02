@@ -59,6 +59,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "insert into customers_cart values (?1, ?2);", nativeQuery = true)
      void insertCustomerAndProduct(int customer_id, int product_id);
     
+    @Modifying
+    @Query(value = "delete from shopping.customers_cart where customer_id = ?1 and cart_id = ?2", nativeQuery = true)
+     void deleteCustomerAndProduct(int customerId, int product_id);
+    
 
 
 
