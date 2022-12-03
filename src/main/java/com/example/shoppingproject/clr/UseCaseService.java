@@ -9,6 +9,7 @@ import com.example.shoppingproject.repository.ProductRepository;
 import com.example.shoppingproject.services.CompanyService;
 import com.example.shoppingproject.services.CustomerService;
 import com.example.shoppingproject.services.GuestService;
+import com.example.shoppingproject.util.Art;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +30,7 @@ public class UseCaseService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println(Art.service);
 
 
         try {
@@ -38,7 +40,7 @@ public class UseCaseService implements CommandLineRunner {
             /*
 
              delete product
-             
+
              */
 
             CompanyService companyService = applicationContext.getBean(CompanyService.class);

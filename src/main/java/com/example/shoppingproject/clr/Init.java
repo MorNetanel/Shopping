@@ -13,6 +13,7 @@ import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.services.CompanyService;
 import com.example.shoppingproject.services.CustomerService;
 import com.example.shoppingproject.services.GuestService;
+import com.example.shoppingproject.util.Art;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -46,6 +47,7 @@ public class Init implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+//        System.out.println(Art.init);
 
         try {
 
