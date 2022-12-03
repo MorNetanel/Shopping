@@ -70,6 +70,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "insert into customers_products values (?1, ?2);", nativeQuery = true)
      void insertCustomerAndProductAtCustomerProducts(int customer_id, int product_id);
 
+    @Modifying
+    @Query(value = "delete from customers_products where products_id = ?1", nativeQuery = true)
+    void deleteProductFromCustomersProductsHistory(int productId);
+
+    @Modifying
+    @Query(value = "delete from products where id = ?1", nativeQuery = true)
+    void deleteProductFromProducts(int productId);
+
 
 
 

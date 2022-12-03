@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CompanyService implements CompanyServiceInterface  {
 
-    private int id = 1;
+    private int id = -1;
     private CompanyRepository companyRepository;
     private  ProductRepository productRepository;
 
@@ -82,11 +82,12 @@ public class CompanyService implements CompanyServiceInterface  {
                 .orElseThrow(()->new SystemException(ErrMsg.ACTION_FAILED));
     }
 
+    @Transactional
     @Override
-    public boolean deleteProduct(int prodId) {
-        if (isProductBelongToCompany(prodId, id)){
-            System.out.println(prodId);
-            productRepository.deleteById(prodId);
+    public boolean deleteProduct(int id) {
+        if (isProductBelongToCompany(id, this.id)){
+            productRepository.deleteProductFromCustomersProductsHistory(id);
+            productRepository.deleteProductFromProducts(id);
             return true;
         }
         return false;
@@ -94,8 +95,8 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public Product updateProduct(Product product) throws SystemException {
-        if (!productRepository.existsById(product.getId()))
-                throw new SystemException(ErrMsg.ID_NOT_FOUND);
+        if (!isProductBelongToCompany(product.getId(), id))
+                throw new SystemException(ErrMsg.ACTION_FAILED);
             return productRepository.save(product);
     }
 

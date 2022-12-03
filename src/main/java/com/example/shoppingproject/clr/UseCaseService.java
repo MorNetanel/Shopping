@@ -37,11 +37,7 @@ public class UseCaseService implements CommandLineRunner {
 
 
 
-            /*
-
-             delete product
-
-             */
+            
 
             CompanyService companyService = applicationContext.getBean(CompanyService.class);
             companyService.login("1111", "2222");
