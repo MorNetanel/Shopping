@@ -46,13 +46,14 @@ public class UseCaseService implements CommandLineRunner {
             CompanyService companyService = applicationContext.getBean(CompanyService.class);
             companyService.login("1111", "2222");
 
+            companyService.deleteProduct(5);
+
 
             List<Product> products =
                     companyService
-                            .getTopSalesProducts(3);
+                            .getCompanyProducts();
             products.forEach((product)->
-                    System.out.println(product.getProductName() +
-                            ":" + product.getSales()) );
+                    System.out.println(product.getId() ));
 
 
 
