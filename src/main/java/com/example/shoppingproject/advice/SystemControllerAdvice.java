@@ -15,6 +15,6 @@ public class SystemControllerAdvice {
     @ExceptionHandler(value = {SystemException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetails exceptionHandler(Exception e){
-        return new ErrorDetails("Lol" , e.getMessage());
+        return new ErrorDetails("ShoppingException" , e.getMessage());
     }
 }

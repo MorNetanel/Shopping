@@ -12,8 +12,10 @@ import com.example.shoppingproject.repository.ProductRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,10 +59,12 @@ public class CompanyService implements CompanyServiceInterface  {
         return productRepository.findByCompanyId(id);
     }
 
+    @Transactional
     @Override
     public Product addProduct(Product product) throws SystemException {
-        if (isProductNameExistsForCompanyProducts(product.getProductName())){
+        if (!isProductNameExistsForCompanyProducts(product.getProductName())){
             addCompanyIdToProduct(product);
+            addPublishedDateToProduct(product);
             return productRepository.save(product);}
         throw new SystemException(ErrMsg.ACTION_FAILED);
     }
@@ -81,6 +85,7 @@ public class CompanyService implements CompanyServiceInterface  {
     @Override
     public boolean deleteProduct(int prodId) {
         if (productRepository.existsById(prodId)){
+            System.out.println(prodId);
             productRepository.deleteById(prodId);
             return true;
         }
@@ -126,6 +131,10 @@ public class CompanyService implements CompanyServiceInterface  {
         return productRepository.findTopSaleProductsByCompanyId(id, numOfProducts);
     }
 
+
+
+    //util methods
+
     public  boolean isProductNameExistsForCompanyProducts(String productName){
         List<Product> products = productRepository.findByCompanyId(id);
         return products.stream().anyMatch(product1 -> product1.getProductName().equalsIgnoreCase(productName));
@@ -133,6 +142,11 @@ public class CompanyService implements CompanyServiceInterface  {
 
     public void addCompanyIdToProduct(Product product) throws SystemException {
         product.setCompany(companyRepository.findById(id).orElseThrow(() -> new SystemException(ErrMsg.ID_NOT_FOUND)));
+    }
+
+    public Product addPublishedDateToProduct(Product product){
+        product.setPublishedDate(Date.valueOf(LocalDate.now()));
+        return product;
     }
 
 

@@ -46,7 +46,7 @@ public class Product {
 
     private int sales;
 
-    private Date publishedDate = Date.valueOf(LocalDate.now());
+    private Date publishedDate;
     private Date ExpiredDate;
     @ManyToOne
     @ToString.Exclude
