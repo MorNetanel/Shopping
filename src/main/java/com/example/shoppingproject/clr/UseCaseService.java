@@ -5,6 +5,7 @@ import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.Color;
 import com.example.shoppingproject.enums.ProductType;
 import com.example.shoppingproject.exceptions.SystemException;
+import com.example.shoppingproject.repository.ProductRepository;
 import com.example.shoppingproject.services.CompanyService;
 import com.example.shoppingproject.services.CustomerService;
 import com.example.shoppingproject.services.GuestService;
@@ -36,16 +37,24 @@ public class UseCaseService implements CommandLineRunner {
 
             /*
 
-             delete product update product get between published dates prices
-            top rating min rating by type top sales
+             delete product
+             
              */
 
             CompanyService companyService = applicationContext.getBean(CompanyService.class);
             companyService.login("1111", "2222");
 
-            System.out.println(companyService.deleteProduct(5));
 
-            companyService.getCompanyProducts().forEach(product -> System.out.println(product));
+            List<Product> products =
+                    companyService
+                            .getTopSalesProducts(3);
+            products.forEach((product)->
+                    System.out.println(product.getProductName() +
+                            ":" + product.getSales()) );
+
+
+
+
 
 
 

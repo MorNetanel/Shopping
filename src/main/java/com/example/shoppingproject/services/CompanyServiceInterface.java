@@ -30,7 +30,7 @@ public interface CompanyServiceInterface {
 
     List<Product> getProductsBetweenPublishedDates(Date startDate, Date endDate);
 
-    List<Product> getProductsBetweenPrices (double minPrice, double maxPrice);
+    List<Product> getProductsBetweenPrices (double minPrice, double maxPrice) throws SystemException;
 
     List<Product> getTopRatingProducts(int numOfProducts);
 

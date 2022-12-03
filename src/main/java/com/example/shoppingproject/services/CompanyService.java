@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CompanyService implements CompanyServiceInterface  {
 
-    private int id = -1;
+    private int id = 1;
     private CompanyRepository companyRepository;
     private  ProductRepository productRepository;
 
@@ -84,7 +84,7 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public boolean deleteProduct(int prodId) {
-        if (productRepository.existsById(prodId)){
+        if (isProductBelongToCompany(prodId, id)){
             System.out.println(prodId);
             productRepository.deleteById(prodId);
             return true;
@@ -101,14 +101,16 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public List<Product> getProductsBetweenPublishedDates(Date startDate, Date endDate) {
-        return productRepository.findProductsBetweenPublishedDateAndExpiredDate(startDate, endDate)
+        return productRepository.findProductsBetweenPublishedDates(startDate, endDate)
                 .stream().filter(product -> product.getCompany().getId() == id).collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> getProductsBetweenPrices(double minPrice, double maxPrice) {
+    public List<Product> getProductsBetweenPrices(double minPrice, double maxPrice) throws SystemException {
+        if (minPrice > 0 && minPrice < maxPrice)
         return productRepository.findByPriceBetween(minPrice, maxPrice)
                 .stream().filter(product -> product.getCompany().getId() == id).collect(Collectors.toList());
+        else throw new SystemException(ErrMsg.ACTION_FAILED);
     }
 
     @Override
@@ -147,6 +149,10 @@ public class CompanyService implements CompanyServiceInterface  {
     public Product addPublishedDateToProduct(Product product){
         product.setPublishedDate(Date.valueOf(LocalDate.now()));
         return product;
+    }
+
+    public boolean isProductBelongToCompany(int productId, int id){
+       return productRepository.findByIdAndCompanyId(productId, id).isPresent();
     }
 
 

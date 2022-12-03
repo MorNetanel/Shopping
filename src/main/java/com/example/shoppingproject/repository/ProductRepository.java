@@ -26,7 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      void deleteCustomerCartHistory(int customersId);
 	
 	@Query(value = "select * from shopping.customers_products where customer_id =?1 and products_id=?2" , nativeQuery = true)
-     Product getProdcutByCustomerIdAndProductId(int CustomerId, int ProductId);
+     Product getProductByCustomerIdAndProductId(int CustomerId, int ProductId);
 	
 	
 	@Query(value = "select products_id from shopping.customers_products where customer_id=?1", nativeQuery = true)
@@ -39,8 +39,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Optional<Product> findByProductName(String productName);
 
-    @Query(value = "select * from products where published_date < ?1 and expired_date > ?2 ", nativeQuery = true)
-    List<Product> findProductsBetweenPublishedDateAndExpiredDate(Date publishedDate, Date expiredDate);
+    @Query(value = "select * from products where published_date >= ?1 and published_date < ?2 ", nativeQuery = true)
+    List<Product> findProductsBetweenPublishedDates(Date publishedDate, Date expiredDate);
 
     List<Product> findByPriceBetween(double minPrice, double maxPrice);
 
@@ -69,6 +69,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Query(value = "insert into customers_products values (?1, ?2);", nativeQuery = true)
      void insertCustomerAndProductAtCustomerProducts(int customer_id, int product_id);
+
+
 
 
 }

@@ -126,7 +126,7 @@ public class CustomerService implements CustomerServiceInterface {
 		
 		Product product = productRepository.findById(id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
 		if(product != null) {
-			product = productRepository.getProdcutByCustomerIdAndProductId(this.id, id);
+			product = productRepository.getProductByCustomerIdAndProductId(this.id, id);
 		}
 		
 		if(product != null) {
