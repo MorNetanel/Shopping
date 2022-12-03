@@ -55,7 +55,7 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
 	@Override
-	public Customer login(String userName, String password) throws SystemException {
+	public Customer login(String userName, String password) throws SystemException{
 		// TODO Login method by user name and password
 		if(userRepository.findClientTypeByUserNameAndPassword(userName, password) == ClientType.CUSTOMER) {
 			Customer customer = customerRepository.findByUserNameAndPassword(userName, password);
@@ -194,39 +194,128 @@ public class CustomerService implements CustomerServiceInterface {
 	}
 
 	@Override
-	public List<Product> getTopRatingProducts(int numOfProducts) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getTopRatingProducts(int numOfProducts) throws SystemException {
+		// TODO Gets top rating products by numbers (top rating is 4-5 rating)
+		
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		int productCounter = numOfProducts;
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if(customersProducts.get(i).getAverageRating() > 4) {
+				returnProducts.add(customersProducts.get(i));
+				productCounter--;
+			}
+			if(productCounter == 0)
+				break;
+		}
+		if(productCounter == 0) {
+			return returnProducts;
+		}
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
 	}
 
 	@Override
-	public List<Product> getProductsByName(String productName) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getProductsByName(String productName) throws SystemException {
+		// TODO Get customer's products by the given name
+		
+		List<Product> customersProducts = getAllProducts();
+		List<Product> returnProducts = new ArrayList<>();
+		
+		for (int i = 0; i < customersProducts.size(); i++) {
+			if(customersProducts.get(i).getProductName().equalsIgnoreCase(productName)) {
+				returnProducts.add(customersProducts.get(i));
+				
+			}
+		}
+		if(!returnProducts.isEmpty())
+			return returnProducts;
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
+		
 	}
 
 	@Override
-	public List<Product> addProductToCart(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> addProductToCart(Product product) throws SystemException {
+		// TODO Add a product to the customer's shopping cart
+		//add the product to the DB.
+		//add to the cart list of the customer the product + update it
+		
+		
+		Customer customer = customerRepository.findById(this.id).orElseThrow(()-> new SystemException(ErrMsg.CUSTOMER_EXIST));
+		List<Product> totalProducts = productRepository.findAll();
+		
+		if(totalProducts.contains(product)) {
+			productRepository.insertCustomerAndProduct(this.id, product.getId());
+			customer.getCart().add(product);
+			customerRepository.save(customer);
+			return customer.getCart();
+		}
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
 	}
 
 	@Override
-	public List<Product> removeProductFromCart(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> removeProductFromCart(Product product) throws SystemException {
+		// TODO Getting rid of the product from the cart
+		
+		//removing it from the DB
+		//removing it from the list
+		
+		Customer customer = customerRepository.findById(this.id).orElseThrow(()-> new SystemException(ErrMsg.CUSTOMER_EXIST));
+		List<Product> totalProducts = productRepository.findAll();
+		
+		if(totalProducts.contains(product)) {
+			productRepository.deleteCustomerAndProduct(this.id, product.getId());
+			customer.getCart().remove(product);
+			customerRepository.save(customer);
+			return customer.getCart();
+		}
+		else throw new SystemException(ErrMsg.PRODUCT_EXIST);
+
+		
 	}
 
 	@Override
 	public boolean clearCart() {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO Clearing the total cart by customer's id
+		productRepository.deleteCustomerCartHistory(this.id);
+		return true;
 	}
 
 	@Override
-	public boolean purchaseCart() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean purchaseCart() throws SystemException {
+		// TODO purchase products from the cart
+		
+		//get all the items by the id V
+		//update customers_products V 
+		//update customer itself (use method) V
+		//remove 1 from quantity of product - if 0 - throw exception V
+		//update the amount in the product DB V
+		//delete purchase history of the user 
+		
+		List<Integer> productsId = productRepository.getAllProductsIdByCustomersIdAtCart(this.id);
+		List<Product> products = productRepository.findAll();
+		Customer customer = customerRepository.findById(this.id).orElseThrow(()-> new SystemException(ErrMsg.CUSTOMER_EXIST));
+		
+		for (int i = 0; i < productsId.size(); i++) {
+			for (int j = 0; j < products.size(); j++) {
+				if(productsId.get(i) == products.get(j).getId()) {
+					Product product = productRepository.findById(productsId.get(i)).orElseThrow(()-> new SystemException(ErrMsg.PRODUCT_EXIST));
+					if(product.getQuantity() < 0) {
+						throw new SystemException(ErrMsg.PRODUCT_EXIST);
+					}
+					product.setQuantity(product.getQuantity()-1);
+					productRepository.insertCustomerAndProductAtCustomerProducts(this.id, products.get(j).getId());
+					customer.getProducts().add(products.get(j));
+					
+					customerRepository.save(customer);
+					productRepository.save(product);
+					
+					clearCart();
+				}
+			}
+		}
+		return true;
 	}
 
 }

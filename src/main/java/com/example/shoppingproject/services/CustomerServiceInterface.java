@@ -23,17 +23,17 @@ public interface CustomerServiceInterface {
 
     List<Product> getAProductsBetweenDates(Date startDate, Date endDate);
 
-    List<Product> getTopRatingProducts(int numOfProducts);
+    List<Product> getTopRatingProducts(int numOfProducts) throws SystemException;
 
-    List<Product> getProductsByName(String productName);
+    List<Product> getProductsByName(String productName) throws SystemException;
 
-    List<Product> addProductToCart (Product product);
+    List<Product> addProductToCart (Product product) throws SystemException;
 
-    List<Product> removeProductFromCart (Product product);
+    List<Product> removeProductFromCart (Product product) throws SystemException;
 
     boolean clearCart();
 
-    boolean purchaseCart();
+    boolean purchaseCart() throws SystemException;
 
 	Customer getDetails() throws SystemException;
 
