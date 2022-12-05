@@ -13,6 +13,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CompanyService implements CompanyServiceInterface  {
 
-    private int id = -1;
+    private int id = 1;
     private CompanyRepository companyRepository;
     private  ProductRepository productRepository;
 
@@ -50,7 +51,7 @@ public class CompanyService implements CompanyServiceInterface  {
     }
 
     @Override
-    public Company getDetails(int id) throws SystemException {
+    public Company getDetails() throws SystemException {
         return companyRepository.findById(id).orElseThrow(()->new SystemException(ErrMsg.ID_NOT_FOUND));
     }
 
@@ -77,6 +78,7 @@ public class CompanyService implements CompanyServiceInterface  {
 
     @Override
     public Product getOneProductByName(String prodName) throws SystemException {
+
         return productRepository
                 .findByProductName(prodName).filter(product -> product.getCompany().getId() == id)
                 .orElseThrow(()->new SystemException(ErrMsg.ACTION_FAILED));
@@ -94,10 +96,14 @@ public class CompanyService implements CompanyServiceInterface  {
     }
 
     @Override
-    public Product updateProduct(Product product) throws SystemException {
+    public Product updateProduct( Product product) throws SystemException {
         if (!isProductBelongToCompany(product.getId(), id))
                 throw new SystemException(ErrMsg.ACTION_FAILED);
+        else {
+            Company companyToInsertBeforeUpdate = companyRepository.findById(id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
+            product.setCompany(companyToInsertBeforeUpdate);
             return productRepository.save(product);
+        }
     }
 
     @Override

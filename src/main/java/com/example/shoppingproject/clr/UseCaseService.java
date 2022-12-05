@@ -33,37 +33,11 @@ public class UseCaseService implements CommandLineRunner {
         System.out.println(Art.service);
 
 
-        try {
-
-
-
-            
-
-            CompanyService companyService = applicationContext.getBean(CompanyService.class);
-            companyService.login("1111", "2222");
-
-            companyService.deleteProduct(5);
-
-
-            List<Product> products =
-                    companyService
-                            .getCompanyProducts();
-            products.forEach((product)->
-                    System.out.println(product.getId() ));
-
-
-
-
-
-
-
-
-
-
-
-
-        }catch (SystemException e){
-            System.out.println(e.getMessage());
-        }
+//        try {
+//
+//
+//        }catch (SystemException e){
+//            System.out.println(e.getMessage());
+//        }
     }
 }

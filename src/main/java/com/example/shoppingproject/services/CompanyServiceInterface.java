@@ -14,7 +14,7 @@ public interface CompanyServiceInterface {
 
 
 
-    Company getDetails (int id) throws SystemException;
+    Company getDetails () throws SystemException;
 
     List<Product> getCompanyProducts();
 

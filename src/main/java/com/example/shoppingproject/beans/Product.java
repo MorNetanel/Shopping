@@ -2,6 +2,7 @@ package com.example.shoppingproject.beans;
 
 import com.example.shoppingproject.enums.Color;
 import com.example.shoppingproject.enums.ProductType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,5 +51,6 @@ public class Product {
     private Date ExpiredDate;
     @ManyToOne
     @ToString.Exclude
+    @JsonIgnore
     private Company company;
 }
