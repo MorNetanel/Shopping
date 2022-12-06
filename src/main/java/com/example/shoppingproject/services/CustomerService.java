@@ -14,13 +14,14 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CustomerService implements CustomerServiceInterface {
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class CustomerService extends ClientService implements CustomerServiceInterface {
 	
 	 /**
      * Methods
@@ -55,12 +56,12 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
 	@Override
-	public Customer login(String userName, String password) throws SystemException{
+	public int login(String userName, String password) throws SystemException{
 		// TODO Login method by user name and password
 		if(userRepository.findClientTypeByUserNameAndPassword(userName, password) == ClientType.CUSTOMER) {
 			Customer customer = customerRepository.findByUserNameAndPassword(userName, password);
 			this.id = customer.getId();
-			return customer;
+			return id;
 		}
 		 else throw new SystemException(ErrMsg.ID_NOT_FOUND);
 	}

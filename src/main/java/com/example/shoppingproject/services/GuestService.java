@@ -8,6 +8,7 @@ import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.repository.CompanyRepository;
 import com.example.shoppingproject.repository.CustomerRepository;
 import com.example.shoppingproject.repository.ProductRepository;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class GuestService implements GuestServiceInterface {
 
 

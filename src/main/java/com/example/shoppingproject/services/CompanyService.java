@@ -9,6 +9,7 @@ import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.repository.CompanyRepository;
 import com.example.shoppingproject.repository.ProductRepository;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CompanyService implements CompanyServiceInterface  {
+@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class CompanyService extends ClientService implements CompanyServiceInterface  {
 
-    private int id = 1;
+    private int id = -1;
     private CompanyRepository companyRepository;
     private  ProductRepository productRepository;
 
@@ -41,11 +42,11 @@ public class CompanyService implements CompanyServiceInterface  {
     }
 
     @Override
-    public Company login(String userName, String password) throws SystemException {
+    public int login(String userName, String password) throws SystemException {
         if (userRepository.findClientTypeByUserNameAndPassword(userName, password) == ClientType.COMPANY){
             Company company = companyRepository.findByUserNameAndPassword(userName, password);
         this.id = company.getId();
-        return company;
+        return id;
         }
         else throw new SystemException(ErrMsg.COMPANY_LOGIN_FAILURE);
     }

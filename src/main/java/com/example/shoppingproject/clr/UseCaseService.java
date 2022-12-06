@@ -1,11 +1,14 @@
 package com.example.shoppingproject.clr;
 
 import com.example.shoppingproject.beans.Company;
+import com.example.shoppingproject.beans.Customer;
 import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.Color;
 import com.example.shoppingproject.enums.ProductType;
 import com.example.shoppingproject.exceptions.SystemException;
+import com.example.shoppingproject.loginManager.LoginManager;
 import com.example.shoppingproject.repository.ProductRepository;
+import com.example.shoppingproject.services.ClientService;
 import com.example.shoppingproject.services.CompanyService;
 import com.example.shoppingproject.services.CustomerService;
 import com.example.shoppingproject.services.GuestService;
@@ -17,6 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,11 +37,11 @@ public class UseCaseService implements CommandLineRunner {
         System.out.println(Art.service);
 
 
-//        try {
-//
-//
-//        }catch (SystemException e){
-//            System.out.println(e.getMessage());
-//        }
+        LoginManager loginManager = applicationContext.getBean(LoginManager.class);
+        CompanyService companyService = (CompanyService) loginManager.login("1111", "2222");
+        companyService.getCompanyProducts().forEach(System.out::println);
+
+
+        }
     }
-}
+

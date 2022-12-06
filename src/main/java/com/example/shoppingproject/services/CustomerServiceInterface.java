@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CustomerServiceInterface {
 
-    Customer login(String userName, String password) throws SystemException;
+
 
     Customer updateCustomer(Customer customer) throws SystemException;
 
