@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Optional<Product> findByProductName(String productName);
 
-    @Query(value = "select * from products where published_date >= ?1 and published_date < ?2 ", nativeQuery = true)
+    @Query(value = "select * from products where published_date >= ?1 and published_date <= ?2 ", nativeQuery = true)
     List<Product> findProductsBetweenPublishedDates(Date publishedDate, Date expiredDate);
 
     List<Product> findByPriceBetween(double minPrice, double maxPrice);

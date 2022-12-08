@@ -9,6 +9,8 @@ import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.repository.UserRepository;
 import com.example.shoppingproject.repository.CompanyRepository;
 import com.example.shoppingproject.repository.ProductRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -24,19 +26,16 @@ import java.util.stream.Collectors;
 
 @Service
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+@RequiredArgsConstructor
 public class CompanyService extends ClientService implements CompanyServiceInterface  {
 
     private int id = 1;
-    private CompanyRepository companyRepository;
-    private  ProductRepository productRepository;
+    private final CompanyRepository companyRepository;
+    private final ProductRepository productRepository;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public CompanyService(CompanyRepository companyRepository, ProductRepository productRepository, UserRepository userRepository) {
-        this.companyRepository = companyRepository;
-        this.productRepository = productRepository;
-        this.userRepository = userRepository;
-    }
+
 
     public int getId() {
         return id;

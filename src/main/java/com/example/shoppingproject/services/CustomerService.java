@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+@RequiredArgsConstructor
 public class CustomerService extends ClientService implements CustomerServiceInterface {
 	
 	 /**
@@ -39,17 +41,13 @@ public class CustomerService extends ClientService implements CustomerServiceInt
 
     private int id = -1;
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public CustomerService(CustomerRepository customerRepository, ProductRepository productRepository, UserRepository userRepository) {
-        this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
-        this.userRepository = userRepository;
-    }
+
 
     public int getId() {
         return id;

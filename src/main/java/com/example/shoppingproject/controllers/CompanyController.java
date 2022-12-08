@@ -20,15 +20,15 @@ public class CompanyController {
 
 
     /*
-                                                        get details----------------WORK!!!
-                                                        get company products-------WORK!!!
-                                                        add product----------------WORK!!!
-                                                        get one product------------WORK!!!
-                                                        get one product by name----WORK!!!
+                                                        get details----------------WORKS!!!
+                                                        get company products-------WORKS!!!
+                                                        add product----------------WORKS!!!
+                                                        get one product------------WORKS!!!
+                                                        get one product by name----WORKS!!!
                                                         delete product
-                                                        update product/////////////WORK!!!
-    get products between published dates
-    get products between prices
+                                                        update product/////////////WORKS!!!
+                                                        get products between published dates//////WORKS!!!
+                                                        get products between prices///WORKS!!!
     get top rating products
     get min rating products
     get products by type
@@ -56,7 +56,7 @@ public class CompanyController {
     }
 
 
-    //not retrieve product to postman
+
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Product updateProduct(@RequestBody Product product) throws SystemException {
@@ -80,17 +80,25 @@ public class CompanyController {
         return companyService.getOneProductByName(name);
     }
 
+
+
     //work, need to be checked with other company products(to see if filtered)
     @GetMapping
     public List<Product> getAllProducts(){
         return companyService.getCompanyProducts();
     }
 
+
+
     @GetMapping("/by_dates")
-    public List<Product> getProductsBetweenPublishedDates(@RequestBody Date startDate, @RequestBody Date endDate){
+    public List<Product> getProductsBetweenPublishedDates(@RequestParam Date startDate, @RequestParam Date endDate){
         return companyService.getProductsBetweenPublishedDates(startDate, endDate);
     }
 
+    @GetMapping("/prices")
+    public List<Product> getProductsBetweenPrices(@RequestParam double minPrice, @RequestParam double maxPrice) throws SystemException {
+        return companyService.getProductsBetweenPrices(minPrice, maxPrice);
+    }
 
 
 

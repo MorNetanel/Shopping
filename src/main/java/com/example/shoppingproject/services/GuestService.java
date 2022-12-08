@@ -8,6 +8,7 @@ import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.repository.CompanyRepository;
 import com.example.shoppingproject.repository.CustomerRepository;
 import com.example.shoppingproject.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +19,7 @@ import java.util.Objects;
 
 @Service
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+@AllArgsConstructor
 public class GuestService implements GuestServiceInterface {
 
 
@@ -26,11 +28,7 @@ public class GuestService implements GuestServiceInterface {
     private ProductRepository productRepository;
 
 
-    public GuestService(CompanyRepository companyRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
-        this.companyRepository = companyRepository;
-        this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
-    }
+
 
 
 
