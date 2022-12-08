@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -19,13 +20,13 @@ public class CompanyController {
 
 
     /*
-                                                        get details
-                                                        get company products
-                                                        add product
-                                                        get one product
-    get one product by name
+                                                        get details----------------WORK!!!
+                                                        get company products-------WORK!!!
+                                                        add product----------------WORK!!!
+                                                        get one product------------WORK!!!
+                                                        get one product by name----WORK!!!
                                                         delete product
-                                                        update product
+                                                        update product/////////////WORK!!!
     get products between published dates
     get products between prices
     get top rating products
@@ -57,7 +58,7 @@ public class CompanyController {
 
     //not retrieve product to postman
     @PutMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Product updateProduct(@RequestBody Product product) throws SystemException {
         return companyService.updateProduct(product);
     }
@@ -69,6 +70,8 @@ public class CompanyController {
     public Product getProduct(@PathVariable int id) throws SystemException {
         return companyService.getOneProduct(id);
     }
+
+
 
     //work
     @GetMapping("/name")
@@ -82,6 +85,13 @@ public class CompanyController {
     public List<Product> getAllProducts(){
         return companyService.getCompanyProducts();
     }
+
+    @GetMapping("/by_dates")
+    public List<Product> getProductsBetweenPublishedDates(@RequestBody Date startDate, @RequestBody Date endDate){
+        return companyService.getProductsBetweenPublishedDates(startDate, endDate);
+    }
+
+
 
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class CompanyService extends ClientService implements CompanyServiceInterface  {
 
-    private int id = -1;
+    private int id = 1;
     private CompanyRepository companyRepository;
     private  ProductRepository productRepository;
 
@@ -98,13 +99,13 @@ public class CompanyService extends ClientService implements CompanyServiceInter
 
     @Override
     public Product updateProduct( Product product) throws SystemException {
-        if (!isProductBelongToCompany(product.getId(), id))
-                throw new SystemException(ErrMsg.ACTION_FAILED);
-        else {
-            Company companyToInsertBeforeUpdate = companyRepository.findById(id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
+            Product productToUpdate = productRepository.findByIdAndCompanyId(product.getId(), id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
+            if (isProductUpdatable(product, productToUpdate)){
+                Company companyToInsertBeforeUpdate = companyRepository.findById(id).orElseThrow(()-> new SystemException(ErrMsg.ID_NOT_FOUND));
             product.setCompany(companyToInsertBeforeUpdate);
-            return productRepository.save(product);
-        }
+            return productRepository.save(product);}
+            else
+            throw new SystemException(ErrMsg.ACTION_FAILED);
     }
 
     @Override
@@ -161,6 +162,17 @@ public class CompanyService extends ClientService implements CompanyServiceInter
 
     public boolean isProductBelongToCompany(int productId, int id){
        return productRepository.findByIdAndCompanyId(productId, id).isPresent();
+    }
+
+    public boolean isProductUpdatable(Product prodAfterChanges, Product prodBeforeChanges){
+        return  (prodAfterChanges.getPrice()>0
+                && prodAfterChanges.getSales() == prodBeforeChanges.getSales()
+                &&prodBeforeChanges.getProductName().equals(prodAfterChanges.getProductName())
+        && prodBeforeChanges.getPublishedDate().getYear()==prodAfterChanges.getPublishedDate().getYear()
+        &&prodBeforeChanges.getPublishedDate().getMonth()==prodAfterChanges.getPublishedDate().getMonth()
+                &&prodBeforeChanges.getPublishedDate().getDay()==prodAfterChanges.getPublishedDate().getDay()
+        &&prodAfterChanges.getExpiredDate().after(Date.valueOf(LocalDate.now())));
+
     }
 
 

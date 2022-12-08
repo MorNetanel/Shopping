@@ -34,12 +34,10 @@ public class UseCaseService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(Art.service);
+//        System.out.println(Art.service);
 
 
-        LoginManager loginManager = applicationContext.getBean(LoginManager.class);
-        CompanyService companyService = (CompanyService) loginManager.login("1111", "2222");
-        companyService.getCompanyProducts().forEach(System.out::println);
+
 
 
         }
