@@ -1,5 +1,6 @@
 package com.example.shoppingproject.services;
 
+import com.example.shoppingproject.aop.Log;
 import com.example.shoppingproject.beans.Company;
 import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.ClientType;
@@ -89,7 +90,6 @@ public class CompanyService extends ClientService implements CompanyServiceInter
     @Override
     public void deleteProduct(int id) throws SystemException {
         if (isProductBelongToCompany(id, this.id)){
-            System.out.println("company service delete product");
             productRepository.deleteProductFromCustomersProductsHistory(id);
             productRepository.deleteProductFromProducts(id);
 

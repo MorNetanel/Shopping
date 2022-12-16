@@ -1,5 +1,6 @@
 package com.example.shoppingproject.controllers;
 
+import com.example.shoppingproject.aop.Log;
 import com.example.shoppingproject.beans.Company;
 import com.example.shoppingproject.beans.Product;
 import com.example.shoppingproject.enums.ProductType;
@@ -38,6 +39,7 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Log
     public void deleteProduct(@PathVariable int id) throws SystemException {
          companyService.deleteProduct(id);
     }
