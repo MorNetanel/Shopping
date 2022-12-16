@@ -36,9 +36,7 @@ public class GuestService implements GuestServiceInterface {
         return productRepository.findAll();
     }
 
-    public List<Company> getAllCompanies(){
-        return companyRepository.findAll();
-    }
+
 
     public Company registerForCompany(Company company) throws SystemException {
         List<Company> companies = companyRepository.findAll();

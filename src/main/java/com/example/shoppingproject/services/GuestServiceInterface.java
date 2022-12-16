@@ -11,7 +11,7 @@ public interface GuestServiceInterface {
 
     List<Product> getAllProducts();
 
-    List<Company> getAllCompanies();
+
 
     Company registerForCompany(Company company) throws SystemException;
 
