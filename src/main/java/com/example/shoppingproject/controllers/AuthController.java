@@ -22,9 +22,14 @@ public class AuthController {
 
     private LoginManager loginManager;
 
+    @GetMapping
+    public String inController(){
+        return "auth controller in controller test";
+    }
 
 
-    @PostMapping(path = "/login")
+
+    @PostMapping()
     public ResponseEntity<String> login(@RequestParam String user, @RequestParam String password)  {
 
         ClientService clientService = null;
@@ -46,7 +51,7 @@ public class AuthController {
 
 
         } catch (SystemException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
+            return ResponseEntity.status(403).body("YOU ART NOT AUTHORIZED!!!");
         }
 
     }
