@@ -2,6 +2,7 @@ package com.example.shoppingproject.controllers;
 
 import com.example.shoppingproject.beans.Company;
 import com.example.shoppingproject.beans.Product;
+import com.example.shoppingproject.enums.ProductType;
 import com.example.shoppingproject.exceptions.SystemException;
 import com.example.shoppingproject.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,31 +20,17 @@ public class CompanyController {
     private CompanyService companyService;
 
 
-    /*
-                                                        get details----------------WORKS!!!
-                                                        get company products-------WORKS!!!
-                                                        add product----------------WORKS!!!
-                                                        get one product------------WORKS!!!
-                                                        get one product by name----WORKS!!!
-                                                        delete product
-                                                        update product/////////////WORKS!!!
-                                                        get products between published dates//////WORKS!!!
-                                                        get products between prices///WORKS!!!
-    get top rating products
-    get min rating products
-    get products by type
-    get top sales products
-    */
 
 
-    //work
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct(@RequestBody Product product) throws SystemException {
         return companyService.addProduct(product);
     }
 
-    //work
+
     @GetMapping("details")
     public Company getDetails() throws SystemException {
         return companyService.getDetails();
@@ -51,8 +38,8 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean deleteProduct(@PathVariable int id){
-        return companyService.deleteProduct(id);
+    public void deleteProduct(@PathVariable int id) throws SystemException {
+         companyService.deleteProduct(id);
     }
 
 
@@ -65,7 +52,7 @@ public class CompanyController {
 
 
 
-    //work
+
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable int id) throws SystemException {
         return companyService.getOneProduct(id);
@@ -73,7 +60,7 @@ public class CompanyController {
 
 
 
-    //work
+
     @GetMapping("/name")
     public Product getProductByName(@RequestParam String name) throws SystemException {
 
@@ -82,7 +69,7 @@ public class CompanyController {
 
 
 
-    //work, need to be checked with other company products(to see if filtered)
+    
     @GetMapping
     public List<Product> getAllProducts(){
         return companyService.getCompanyProducts();
@@ -99,6 +86,30 @@ public class CompanyController {
     public List<Product> getProductsBetweenPrices(@RequestParam double minPrice, @RequestParam double maxPrice) throws SystemException {
         return companyService.getProductsBetweenPrices(minPrice, maxPrice);
     }
+
+    @GetMapping("/top")
+    public List<Product> getTopRatingProducts(@RequestParam int num){
+        return companyService.getTopRatingProducts(num);
+    }
+
+    @GetMapping("/min")
+    public List<Product> getMinRatingProducts(@RequestParam int num){
+        return companyService.getMinRatingProducts(num);
+    }
+
+    @GetMapping("/type")
+    public List<Product> getProductsByType(@RequestParam ProductType type){
+        return companyService.getProductsByType(type);
+    }
+
+    @GetMapping("/topsales")
+    public List<Product>getTopSalesProducts(@RequestParam int num){
+        return companyService.getTopSalesProducts(num);
+    }
+
+
+
+
 
 
 

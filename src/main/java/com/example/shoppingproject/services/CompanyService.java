@@ -87,13 +87,15 @@ public class CompanyService extends ClientService implements CompanyServiceInter
 
     @Transactional
     @Override
-    public boolean deleteProduct(int id) {
+    public void deleteProduct(int id) throws SystemException {
         if (isProductBelongToCompany(id, this.id)){
+            System.out.println("company service delete product");
             productRepository.deleteProductFromCustomersProductsHistory(id);
             productRepository.deleteProductFromProducts(id);
-            return true;
+
         }
-        return false;
+        else
+        throw new SystemException(ErrMsg.ACTION_FAILED);
     }
 
     @Override

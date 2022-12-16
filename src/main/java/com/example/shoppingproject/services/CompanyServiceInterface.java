@@ -24,7 +24,7 @@ public interface CompanyServiceInterface {
 
     Product getOneProductByName(String prodName) throws SystemException;
 
-    boolean deleteProduct (int prodId);
+    void deleteProduct (int prodId) throws SystemException;
 
     Product updateProduct (Product product) throws SystemException;
 
