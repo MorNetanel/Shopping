@@ -21,7 +21,7 @@ public class GuestController {
     private final GuestService guestService;
 
 
-    @GetMapping(value = "/products")
+    @GetMapping()
     public List<Product> getAllProducts(){
         return guestService.getAllProducts();
     }
