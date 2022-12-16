@@ -22,6 +22,9 @@ public class LoginManager {
         ClientType clientType;
         UserRepository userRepository = applicationContext.getBean(UserRepository.class);
         clientType = userRepository.findClientTypeByUserNameAndPassword(userName, password);
+        if (clientType == null)
+            throw new SystemException(ErrMsg.COMPANY_LOGIN_FAILURE);
+
 
         switch (clientType){
             case COMPANY :

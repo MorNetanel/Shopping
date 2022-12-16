@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CompanyService extends ClientService implements CompanyServiceInterface  {
 
-    private int id = 1;
+    private int id = -1;
     private final CompanyRepository companyRepository;
     private final ProductRepository productRepository;
 
