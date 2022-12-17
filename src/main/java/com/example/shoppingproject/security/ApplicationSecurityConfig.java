@@ -14,6 +14,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig  {
@@ -30,7 +32,7 @@ public class ApplicationSecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers( "/auth/**").permitAll()//permit this url for everyone
+//                        .requestMatchers( "/auth/**").permitAll()//permit this url for everyone
                         .requestMatchers("/guest").permitAll()//permit this url for everyone
  //************************************************************************************
                         //permit this url by role:
@@ -43,7 +45,21 @@ public class ApplicationSecurityConfig  {
                 )
 
                 .formLogin()
-                .loginPage("/auth")
+                .loginPage("/auth").permitAll()
+
+                //go to this url after success login
+//                .defaultSuccessUrl("/company", true)
+
+                //remember me + set duration of remember me to 28 days
+                .and().rememberMe().tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(28))
+                //hash of the remember me
+                .key("lovetodevelop")
+
+
+                //logout-----
+                .and().logout().logoutUrl("/logout").clearAuthentication(true)
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
         ;
         http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//able to access token in j.s.
 
