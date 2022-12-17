@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/guest")
 @AllArgsConstructor
-@CrossOrigin
 public class GuestController {
 
     private final GuestService guestService;

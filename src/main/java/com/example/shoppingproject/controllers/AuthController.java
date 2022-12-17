@@ -17,7 +17,6 @@ import java.util.Date;
 @RestController
 @RequestMapping(value = "/auth")
 @AllArgsConstructor
-@CrossOrigin
 public class AuthController {
 
     private LoginManager loginManager;
